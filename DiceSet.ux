@@ -1,0 +1,70 @@
+<Panel ux:Class="DiceSet" Padding="5">
+	<Rectangle CornerRadius="5" Color="#EEE" Layer="Background"/>
+	<StackPanel>
+		<DockPanel>
+			<WrapPanel>
+				<Each Items="{dice}">
+					<Panel Color="#EEE0" ux:Name="outer">
+						<!-- TODO: {editing} does not contain property id -->
+						<WhileTrue Value="{id} == (isNull({editing}) ? 0 : {editing.id})">
+							<Change outer.Color="#AAF" Duration="0.2"/>
+						</WhileTrue>
+
+						<StackPanel Padding="5" ItemSpacing="0" Margin="5,2">
+							<Rectangle StrokeColor="#000" StrokeWidth="2" CornerRadius="2"
+								Color="{defn.color}" Width="50" Height="50"
+								Clicked="{editDie}">
+								<Circle StrokeColor="#000" StrokeWidth="1" Color="#DDD"
+									Alignment="TopRight" Margin="5" Padding="5">
+									<Text Value="{defn.numSides}" TextColor="#000"/>
+								</Circle>
+							</Rectangle>
+							<Text Value="{defn.name}" TextWrapping="Wrap" TextAlignment="Center"
+								MaxWidth="60" FontSize="10"/>
+						</StackPanel>
+					</Panel>
+				</Each>
+			
+				<Rectangle StrokeColor="#444" StrokeWidth="1" Clicked="{addDie}" Alignment="Center" Padding="6">
+					<Text Value="+" FontSize="20" Color="#444"/>
+				</Rectangle>
+			
+				<WhileTrue Value="{modifier} > 0">
+					<Text Alignment="Center" Value="+{modifier}" FontSize="32" TextColor="#080"/>
+				</WhileTrue>
+				<WhileTrue Value="{modifier} < 0">
+					<Text Alignment="Center" Value="{modifier}" FontSize="32" TextColor="#800"/>
+				</WhileTrue>
+				<WhileTrue Value="{modifier} == 0">
+					<Text Alignment="Center" Value="{modifier}" FontSize="32" TextColor="#000"/>
+				</WhileTrue>
+			</WrapPanel>
+			
+			<Rectangle Dock="Right" Color="#CDC" CornerRadius="5" Alignment="TopRight" Margin="5">
+				<Text Value="{= round({expectedValue}*100)/100}" FontSize="32"/>
+			</Rectangle>
+			
+		</DockPanel>
+		
+		<WhileFalse Value="isNull({editing})">
+			<DockPanel Color="#AAF">
+				<StackPanel Dock="Left" Margin="0,0,5,0">
+					<Text Value="Close" Clicked="{closeEdit}"/>
+					<Text Value="Remove" Clicked="{removeDie}"/>
+				</StackPanel>
+				
+				<With Data="{editing}">
+					<Text Dock="Top" Value="Editing {defn.name}"/>
+				</With>
+				<WrapPanel>
+					<Each Items="{allDice}">	
+						<Rectangle CornerRadius="5" Color="#fff" Clicked="{selectDie}"
+							Margin="10,5" Padding="10,3">
+							<Text Value="{name}" FontSize="16"/>
+						</Rectangle>
+					</Each>
+				</WrapPanel>
+			</DockPanel>
+		</WhileFalse>
+	</StackPanel>
+</Panel>

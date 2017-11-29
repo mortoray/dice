@@ -1,0 +1,9 @@
+<App Model="State/MainState">
+	<ScrollView>
+		<StackPanel Margin="5" ItemSpacing="5">
+			<Each Items="{diceSets}">
+				<DiceSet/>
+			</Each>
+		</StackPanel>
+	</ScrollView>
+</App>
