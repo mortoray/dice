@@ -3,42 +3,19 @@
 		<DockPanel>
 			<!-- TODO: WrapPanel.ItemSpacing -->
 			<WrapPanel>
-				<Each Items="{dice}">
-					<Panel Color="#EEE0" ux:Name="outer">
-						<!-- TODO: {editing} does not contain property id -->
-						<WhileTrue Value="{id} == (isNull({editing}) ? 0 : {editing.id})">
-							<Change outer.Color="ColorPrimary" Duration="0.2"/>
-						</WhileTrue>
-
-						<StackPanel Padding="5" ItemSpacing="0" Margin="5,2">
-							<Rectangle StrokeColor="#000" StrokeWidth="2" CornerRadius="2"
-								Color="{defn.color}" Width="50" Height="50"
-								Clicked="{editDie}">
-								<Circle StrokeColor="#000" StrokeWidth="1" Color="#DDD"
-									Alignment="TopRight" Margin="5" Padding="5">
-									<Text Value="{defn.numSides}" TextColor="#000"/>
-								</Circle>
-							</Rectangle>
-							<Text Value="{defn.name}" TextWrapping="Wrap" TextAlignment="Center"
-								MaxWidth="60" FontSize="10"/>
-						</StackPanel>
-					</Panel>
-					<Panel Width="2"/>
+				<Each Items="{dice}" MatchKey="type">
+					<ViewStandardDie ux:Template="standard" Clicked="{editDie}"/>
+					<ViewDarkSoulsDie ux:Template="dark_souls" Clicked="{editDie}"/>
+					<ViewModifierItem ux:Template="modifier" Clicked="{editDie}"/>
 				</Each>
 			
-				<Rectangle Color="ColorPrimary" CornerRadius="5" Clicked="{addDie}" Alignment="Center" Padding="6,3">
-					<Text Value="+" FontSize="20" Color="ColorPrimaryText"/>
-				</Rectangle>
-			
-<!--				<WhileTrue Value="{modifier} > 0">
-					<Text Alignment="Center" Value="+{modifier}" FontSize="32" TextColor="#080"/>
-				</WhileTrue>
-				<WhileTrue Value="{modifier} < 0">
-					<Text Alignment="Center" Value="{modifier}" FontSize="32" TextColor="#800"/>
-				</WhileTrue>
-				<WhileTrue Value="{modifier} == 0">
-					<Text Alignment="Center" Value="{modifier}" FontSize="32" TextColor="#000"/>
-				</WhileTrue>-->
+				<Panel Alignment="Center" Padding="7" HitTestMode="LocalBounds">
+					<Text Value="&#xf0fe;" FontSize="25" Color="ColorPrimary"	
+						Font="FontAwesome"/>
+					<Clicked>
+						<Set addDiePanel.Value="true"/>
+					</Clicked>
+				</Panel>
 			</WrapPanel>
 			
 			<StackPanel Dock="Right" Alignment="TopRight" Margin="5">
@@ -46,13 +23,24 @@
 				<Text Value="{= round({expectedValue}*100)/100}" FontSize="32" Alignment="Right"/>
 			</StackPanel>
 			
+			<WhileTrue ux:Name="addDiePanel">
+				<WrapPanel Dock="Bottom" Color="ColorPrimary">
+					<Each Items="{itemTypes}">
+						<StdButton Label="{name}" Clicked="{addDie}">	
+							<Clicked>
+								<Set addDiePanel.Value="false"/>
+							</Clicked>
+						</StdButton>
+					</Each>
+				</WrapPanel>
+			</WhileTrue>
 		</DockPanel>
 		
 		<WhileFalse Value="isNull({editing})">
 			<DockPanel Color="ColorPrimary">
 				<With Data="{editing}">
 					<Panel Padding="5,3" Dock="Top">
-						<Text Value="{defn.name}"/>
+						<Text Value="{name}"/>
 						<Rectangle Alignment="Bottom" Color="ColorDivider" Height="1"/>
 					</Panel>
 				</With>
@@ -72,14 +60,20 @@
 					<Dice.Button Label="Remove" Icon="&#xf068;" Clicked="{removeDie}"/>
 				</StackPanel>
 				
-				<WrapPanel>
-					<Each Items="{allDice}">	
-						<Rectangle CornerRadius="5" Color="#fff" Clicked="{selectDie}"
-							Margin="10,5" Padding="10,3">
-							<Text Value="{name}" FontSize="16"/>
-						</Rectangle>
-					</Each>
-				</WrapPanel>
+				<With Data="{editing}">
+					<!-- TODO: Use Instance with DataContext -->
+					<Match Value="{type}">
+						<Case String="standard">
+							<EditStandardDie/>
+						</Case>
+						<Case String="dark_souls">
+							<EditDarkSoulsDie/>
+						</Case>
+						<Case String="modifier">
+							<EditModifierItem/>
+						</Case>
+					</Match>
+				</With>
 			</DockPanel>
 		</WhileFalse>
 	</StackPanel>

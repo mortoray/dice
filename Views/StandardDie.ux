@@ -1,0 +1,10 @@
+<ViewItemBase ux:Class="ViewStandardDie">
+	<Rectangle StrokeColor="#000" StrokeWidth="2" CornerRadius="2"
+		Color="{defn.color}" Width="50" Height="50"
+		Clicked="{editDie}">
+		<Circle StrokeColor="#000" StrokeWidth="1" Color="#DDD"
+			Alignment="Center" Margin="5" Padding="5">
+			<Text Value="{defn.numSides}" TextColor="#000"/>
+		</Circle>
+	</Rectangle>
+</ViewItemBase>

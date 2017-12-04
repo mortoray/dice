@@ -1,0 +1,5 @@
+<ViewItemBase ux:Class="ViewModifierItem">
+	
+	<!-- TODO: No space in between }{ caused parsing error -->
+	<Text Value="{= {modifier} > 0 ? '+' : '' } {modifier}" FontSize="20" Alignment="Center"/>
+</ViewItemBase>

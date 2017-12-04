@@ -1,0 +1,7 @@
+<Panel ux:Class="ViewItemBase" HitTestMode="LocalBounds"
+	Color="#FFF0" Padding="7">
+	<!-- TODO: {editing} does not contain property id, ternary probably needs to be lazy -->
+ 	<WhileTrue Value="{id} == (isNull({editing}) ? 0 : {editing.id})">
+		<Change this.Color="ColorPrimary" Duration="0.2"/>
+	</WhileTrue>
+</Panel>

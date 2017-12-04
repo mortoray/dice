@@ -1,0 +1,5 @@
+<Panel ux:Class="EditModifierItem">
+	<!-- TODO: This should work as a TextInput 
+	<TextInput Value="{modifier}"/>-->
+	<Slider Minimum="-10" Maximum="10" Value="{modifier}" UserStep="1"/>
+</Panel>

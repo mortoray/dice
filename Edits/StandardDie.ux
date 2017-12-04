@@ -1,0 +1,5 @@
+<WrapPanel ux:Class="EditStandardDie">
+	<Each Items="{standardDice}">	
+		<StdButton Label="{name}" Clicked="{selectDie}"/>	
+	</Each>
+</WrapPanel>

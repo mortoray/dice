@@ -1,0 +1,7 @@
+<ViewItemBase Color="#EEE0" ux:Class="ViewDarkSoulsDie">
+	<Text Value="DS" TextWrapping="Wrap" Alignment="Center"
+		MaxWidth="60" FontSize="20" TextColor="#888"/>
+	<Rectangle StrokeColor="#000" StrokeWidth="2" CornerRadius="2"
+		Color="{defn.color}" Width="50" Height="50">
+	</Rectangle>
+</ViewItemBase>
