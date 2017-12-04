@@ -1,9 +1,15 @@
 <App Model="State/MainState">
-	<ScrollView>
-		<StackPanel Margin="5" ItemSpacing="5">
-			<Each Items="{diceSets}">
-				<DiceSet/>
-			</Each>
-		</StackPanel>
-	</ScrollView>
+	<ClientPanel>
+		<Panel Color="ColorPrimary" Dock="Top" Padding="0,3">
+			<Text Alignment="Center" Value="{title}" Color="ColorPrimaryText"/>
+		</Panel>
+		<ScrollView>
+			<StackPanel Margin="5" ItemSpacing="5">
+				<Each Items="{diceSets}">
+					<DiceSet/>
+					<Rectangle Margin="3" Height="2" Color="ColorDivider"/>
+				</Each>
+			</StackPanel>
+		</ScrollView>
+	</ClientPanel>
 </App>
