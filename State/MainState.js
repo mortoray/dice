@@ -34,9 +34,10 @@ var standardDice = {
 }
 
 var darkSoulsDice = {
-	black: new StaticDarkSoulsDie( "Black", [0, 1, 1, 1, 2, 2], [0,0,0] ),
-	blue: new StaticDarkSoulsDie( "Blue", [1,1, 2,2,2, 3], [0,0,0.5] ),
-	orange: new StaticDarkSoulsDie( "Orange", [1, 2,2, 3,3, 4], [0.7,0.5,0] ),
+	black: new StaticDarkSoulsDie( "Black", [0, 1, 1, 1, 2, 2], "#202d35" ),
+	blue: new StaticDarkSoulsDie( "Blue", [1,1, 2,2,2, 3], "#145bdb" ),
+	orange: new StaticDarkSoulsDie( "Orange", [1, 2,2, 3,3, 4], "#ea6a43" ),
+	//green: new StaticDarkSoulsDie( "Green", [1,1,1,0,0,0], "#097575" ),
 }
 
 var ItemId = 1

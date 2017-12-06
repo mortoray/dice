@@ -10,6 +10,7 @@
 	<float4 ux:Global="ColorIcons" ux:Value="#FFFFFF"/>
 	<float4 ux:Global="ColorDivider" ux:Value="#BDBDBD"/>
 
+	<float4 ux:Global="ColorStandardDie" ux:Value="#607D8B"/>
  	<Font ux:Global="FontAwesome" File="Assets/FontAwesome.otf"/>
   
 	<Rectangle ux:Class="StdButton" 
