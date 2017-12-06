@@ -4,17 +4,14 @@
 			<!-- TODO: WrapPanel.ItemSpacing -->
 			<WrapPanel>
 				<Each Items="{items}" MatchKey="type">
-					<ViewStandardDie ux:Template="standard" Clicked="{editItem}"/>
-					<ViewDarkSoulsDie ux:Template="dark_souls" Clicked="{editItem}"/>
-					<ViewModifierItem ux:Template="modifier" Clicked="{editItem}"/>
+					<ViewStandardDie ux:Template="standard" Clicked="{editItemAction}"/>
+					<ViewDarkSoulsDie ux:Template="dark_souls" Clicked="{editItemAction}"/>
+					<ViewModifierItem ux:Template="modifier" Clicked="{editItemAction}"/>
 				</Each>
 			
-				<Panel Alignment="Center" Padding="7" HitTestMode="LocalBounds">
+				<Panel Alignment="Center" Padding="7" HitTestMode="LocalBounds" Clicked="{openDiePanel}">
 					<Text Value="&#xf0fe;" FontSize="25" Color="ColorPrimary"	
 						Font="FontAwesome"/>
-					<Clicked Handler="{closeEdit}">
-						<Set addDiePanel.Value="true"/>
-					</Clicked>
 				</Panel>
 			</WrapPanel>
 			
@@ -23,14 +20,10 @@
 				<Text Value="{= round({expectedValue}*100)/100}" FontSize="32" Alignment="Right"/>
 			</StackPanel>
 			
-			<WhileTrue ux:Name="addDiePanel">
+			<WhileTrue Value="{addDiePanel}">
 				<WrapPanel Dock="Bottom" Color="ColorPrimary">
 					<Each Items="{itemTypes}">
-						<StdButton Label="{name}" Clicked="{addItem}">	
-							<Clicked>
-								<Set addDiePanel.Value="false"/>
-							</Clicked>
-						</StdButton>
+						<StdButton Label="{name}" Clicked="{addItem}"/>	
 					</Each>
 				</WrapPanel>
 			</WhileTrue>

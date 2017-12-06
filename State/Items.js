@@ -56,6 +56,10 @@ export class Die extends Item {
 	get expectedValue() {
 		return this.defn.expectedValue
 	}
+	
+	selectDie( args ) {
+		this.defn = args.data
+	}
 }
 
 export class StandardDie extends Die {

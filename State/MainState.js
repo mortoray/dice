@@ -7,6 +7,7 @@ class ItemSet {
 			new Items.DarkSoulsDie(Items.darkSoulsDice.black) 
 		]
 		this.editing = null
+		this.addDiePanel = false
 	}
 	
 	get expectedValue() {
@@ -17,18 +18,27 @@ class ItemSet {
 		return sum
 	}
 	
-	editItem( args ) {
-		this.editing = args.data
+	editItemAction( args ) {
+		this.editItem(args.data)
+	}
+	
+	editItem( item ) {
+		this.addDiePanel = false
+		if (this.editing == item) {
+			this.closeEdit()
+			return
+		} 
+		
+		this.editing = item
 	}
 	
 	closeEdit() {
 		this.editing = null
 	}
 	
-	selectDie( args ) {
-		this.editing.defn = args.data
-		//TODO: Loses an update with this
-		//this.editing = null
+	openDiePanel() {
+		this.closeEdit()
+		this.addDiePanel = true
 	}
 	
 	addItem( args ) {
@@ -52,7 +62,7 @@ class ItemSet {
 		}
 		
 		this.items.push( newItem )
-		this.editing = newItem
+		this.editItem( newItem )
 	}
 	
 	removeItem() {
