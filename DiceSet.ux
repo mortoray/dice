@@ -3,16 +3,16 @@
 		<DockPanel>
 			<!-- TODO: WrapPanel.ItemSpacing -->
 			<WrapPanel>
-				<Each Items="{dice}" MatchKey="type">
-					<ViewStandardDie ux:Template="standard" Clicked="{editDie}"/>
-					<ViewDarkSoulsDie ux:Template="dark_souls" Clicked="{editDie}"/>
-					<ViewModifierItem ux:Template="modifier" Clicked="{editDie}"/>
+				<Each Items="{items}" MatchKey="type">
+					<ViewStandardDie ux:Template="standard" Clicked="{editItem}"/>
+					<ViewDarkSoulsDie ux:Template="dark_souls" Clicked="{editItem}"/>
+					<ViewModifierItem ux:Template="modifier" Clicked="{editItem}"/>
 				</Each>
 			
 				<Panel Alignment="Center" Padding="7" HitTestMode="LocalBounds">
 					<Text Value="&#xf0fe;" FontSize="25" Color="ColorPrimary"	
 						Font="FontAwesome"/>
-					<Clicked>
+					<Clicked Handler="{closeEdit}">
 						<Set addDiePanel.Value="true"/>
 					</Clicked>
 				</Panel>
@@ -26,7 +26,7 @@
 			<WhileTrue ux:Name="addDiePanel">
 				<WrapPanel Dock="Bottom" Color="ColorPrimary">
 					<Each Items="{itemTypes}">
-						<StdButton Label="{name}" Clicked="{addDie}">	
+						<StdButton Label="{name}" Clicked="{addItem}">	
 							<Clicked>
 								<Set addDiePanel.Value="false"/>
 							</Clicked>
@@ -57,7 +57,7 @@
 				
 				<StackPanel Dock="Left" Margin="5" ItemSpacing="5">
 					<Dice.Button Label="Close" Icon="&#xf00d;" Clicked="{closeEdit}"/>
-					<Dice.Button Label="Remove" Icon="&#xf068;" Clicked="{removeDie}"/>
+					<Dice.Button Label="Remove" Icon="&#xf068;" Clicked="{removeItem}"/>
 				</StackPanel>
 				
 				<With Data="{editing}">
