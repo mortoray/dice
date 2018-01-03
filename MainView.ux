@@ -1,15 +1,30 @@
 <App Model="State/MainState">
+	<!-- Debug Panel -->
+	<Rectangle CornerRadius="5" Alignment="TopRight" Color="#EDC" Margin="5" Padding="10,5">
+		<StackPanel Orientation="Horizontal" ItemSpacing="10">
+			<Text Alignment="Right" Value="Save" Clicked="{saveData}"/>
+			<Text Alignment="Left" Value="Load" Clicked="{loadData}"/>
+		</StackPanel>
+	</Rectangle>
+		
 	<ClientPanel>
 		<Panel Color="ColorPrimary" Dock="Top" Padding="0,3">
 			<Text Alignment="Center" Value="{title}" Color="ColorPrimaryText"/>
 		</Panel>
+		
 		<ScrollView>
 			<StackPanel Margin="5" ItemSpacing="5">
 				<Each Items="{itemSets}">
 					<DiceSet/>
 					<Rectangle Margin="3" Height="2" Color="ColorDivider"/>
 				</Each>
+				
+				<Panel Alignment="Center" Padding="7" HitTestMode="LocalBounds" Clicked="{addNewSet}" Color="ColorPrimary">
+					<Text Value="New Set" FontSize="25" Color="ColorPrimaryText"/>
+				</Panel>
 			</StackPanel>
+			
+			
 		</ScrollView>
 	</ClientPanel>
 </App>

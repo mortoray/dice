@@ -1,3 +1,5 @@
+var FileSystem = require("FuseJS/FileSystem")
+
 import * as Items from "./Items"
 
 class ItemSet {
@@ -8,6 +10,25 @@ class ItemSet {
 		]
 		this.editing = null
 		this.addDiePanel = false
+	}
+
+	getSerialObject() {
+		var items = []
+		this.items.forEach( (item) => {
+			items.push( item.getSerialObject() )
+		})
+		return {
+			items: items,
+		}
+	}
+	
+	static loadObject(data) {
+		var itemSet = new ItemSet()
+		itemSet.items = []
+		data.items.forEach( (item)=> {
+			itemSet.items.push( Items.Item.loadObject(item) )
+		})
+		return itemSet
 	}
 	
 	get expectedValue() {
@@ -76,7 +97,11 @@ export default class MainState {
 	constructor() {
 		this.title = "Dice Stat Comparator"
 		
-		this.itemSets = [ new ItemSet(), new ItemSet() ]
+		this.isLoading = true
+		
+		this.itemSets = [ new ItemSet(), new ItemSet() ] //initial default, loadData will overwrite 	if something there
+		this.loadData()
+		
 		//convert the dictionary of dice into an array
 		this.standardDice = objectToList( Items.standardDice )
 		this.darkSoulsDice = objectToList( Items.darkSoulsDice )
@@ -91,6 +116,65 @@ export default class MainState {
 			name: "Modifier",
 			type: "modifier",
 		}]
+	}
+	
+	addNewSet() {
+		this.itemSets.push( new ItemSet() )
+	}
+	
+	get savePath() {
+		var saveDir = FileSystem.dataDirectory
+		return saveDir + "/state"
+	}
+	
+	loadData() {
+		console.log( "Loading: " + this.savePath )
+		FileSystem.readTextFromFile( this.savePath ).then( (contents) => {
+			var data = JSON.parse(contents)
+			if (!data.version || data.version < 1) {
+				console.log( "Invalid format" )
+				this.isLoading = false
+				return
+			}
+			
+			try {
+				if (data.itemSets) {
+					this.loadItemSets(data.itemSets)
+				} 
+			} catch(error) {
+				//TODO: should not need this catch, but error was swallowed
+				console.log(error)
+			}
+			
+			this.isLoading = false
+		}, (error) => {
+			this.isLoading = false
+			console.log( "Error: ")
+			console.dir( error )
+		})
+	}
+	
+	saveData() {
+		console.log( "Saving: " + this.savePath )
+		FileSystem.writeTextToFile( this.savePath, JSON.stringify({
+			version: 1.0,
+			itemSets: this.saveItemSets(),
+		}, null, "\t"))
+	}
+	
+	saveItemSets() {
+		var ser = []
+		this.itemSets.forEach( (set) => {
+			ser.push( set.getSerialObject() )
+		})
+		return ser
+	}
+	
+	loadItemSets(data) {
+		this.itemSets = []
+		for (let i=0; i < data.length; ++i) {
+			this.itemSets.push( ItemSet.loadObject(data[i]) )
+		}
 	}
 }
 
