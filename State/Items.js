@@ -72,7 +72,7 @@ export class Item {
 			type: this.type,
 		}
 	}
-
+	
 	static loadObject(data) {
 		switch(data.type) {
 			case 'standard': return StandardDie.loadObject(data)
@@ -101,6 +101,14 @@ export class Die extends Item {
 	
 	get expectedValue() {
 		return this.defn.expectedValue
+	}
+	
+	get defnId() {
+		return this.defn.id
+	}
+	
+	set defnId(id) {
+		this.defn = allDice[id]
 	}
 	
 	selectDie( args ) {

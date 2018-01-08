@@ -1,5 +1,20 @@
-<Panel ux:Class="DiceSet" Padding="5">
-	<StackPanel>
+<Panel ux:Class="DiceSet" Padding="5" HitTestMode="LocalBoundsAndChildren">
+	<UserEvent ux:Name="requestDelete"/>
+	
+	<SwipeGesture Direction="Left" LengthNode="optionsPanel" Type="Active"
+		ux:Name="swipeLeft"/>
+	<SwipingAnimation Source="swipeLeft">
+		<Move Target="primary" X="-1" RelativeTo="Size" RelativeNode="optionsPanel"/>
+	</SwipingAnimation>
+	<Panel ux:Name="optionsPanel" Alignment="Right" Color="#F00" Padding="10" ZOffset="-1">
+		<Text Value="Delete" Alignment="Center"/>
+		<Clicked>
+			<RaiseUserEvent EventName="requestDelete"/>
+			<Scale Factor="0.5" Duration="0.3"/>
+		</Clicked>
+	</Panel>
+	
+	<StackPanel ux:Name="primary" Color="#FFF">
 		<DockPanel>
 			<!-- TODO: WrapPanel.ItemSpacing -->
 			<WrapPanel>

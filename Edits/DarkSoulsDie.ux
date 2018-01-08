@@ -1,5 +1,16 @@
 <WrapPanel ux:Class="EditDarkSoulsDie">
+	<Selection Value="{defnId}" MinCount="1" MaxCount="1"/>
 	<Each Items="{darkSoulsDice}">
-		<StdButton Label="{name}" Clicked="{selectDie}"/>	
+		<Rectangle Color="#FFF" CornerRadius="10" Margin="10,5" Padding="10,3"
+			StrokeColor="#0000" StrokeWidth="2" ux:Name="sel">
+			<Selectable Value="{id}"/>
+			<Text Value="{name}"/>
+			<WhileSelected>
+				<Change sel.StrokeColor="#000F" Duration="0.3"/>
+			</WhileSelected>
+			<Clicked>
+ 				<ToggleSelection/>
+			</Clicked>
+		</Rectangle>
 	</Each>
 </WrapPanel>

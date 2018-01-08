@@ -1,6 +1,16 @@
 var FileSystem = require("FuseJS/FileSystem")
+var Lifecycle = require('FuseJS/Lifecycle')
 
 import * as Items from "./Items"
+
+var serializer = undefined
+// will also be called in case of `enteringBackground` (confirmed iOS/Android)
+Lifecycle.on("exitedInteractive", () => {
+	if (serializer) {
+		serializer.save()
+	}
+})
+
 
 class ItemSet {
 	constructor() {
@@ -55,6 +65,7 @@ class ItemSet {
 	
 	closeEdit() {
 		this.editing = null
+		serializer.save()
 	}
 	
 	openDiePanel() {
@@ -95,6 +106,8 @@ class ItemSet {
 
 export default class MainState {
 	constructor() {
+		serializer = this
+		
 		this.title = "Dice Stat Comparator"
 		
 		this.isLoading = true
@@ -120,6 +133,12 @@ export default class MainState {
 	
 	addNewSet() {
 		this.itemSets.push( new ItemSet() )
+	}
+
+	deleteSet(args) {
+		var ndx = this.itemSets.indexOf(args.data)
+		this.itemSets.splice( ndx, 1 )
+		this.save()
 	}
 	
 	get savePath() {
@@ -154,7 +173,7 @@ export default class MainState {
 		})
 	}
 	
-	saveData() {
+	save() {
 		console.log( "Saving: " + this.savePath )
 		FileSystem.writeTextToFile( this.savePath, JSON.stringify({
 			version: 1.0,
