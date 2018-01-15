@@ -16,6 +16,11 @@ class StaticDie {
 		return sum / this.sides.length
 	}
 	
+	randomValue() {
+		let ndx = Math.floor(Math.random() * this.sides.length)
+		return this.sides[ndx]
+	}
+	
 	getSerialObject() {
 		return {
 			id: this.id,

@@ -1,0 +1,26 @@
+<Page ux:Class="PageDiceRoller" Title="Dice Roller">
+	<DockPanel>
+		<Panel Dock="Top">
+			<Text Alignment="Center" Value="{totalValue}" FontSize="32"/>
+		</Panel>
+		
+		<WrapPanel>
+			<Each Items="{selectedDice}">
+				<Panel Margin="10">
+					<!-- TODO: Why didn't Margin work here -->
+					<Text Value="{defn.name} = {result}"/>
+				</Panel>
+			</Each>
+		</WrapPanel>
+		
+		<StdButton Alignment="BottomRight" Margin="10" Label="X" Clicked="{clearDice}"/>
+		
+		<WrapPanel Dock="Bottom">
+			<Each Items="{dice}">
+				<Panel Color="ColorPrimary" Padding="10,5" Margin="5" HitTestMode="LocalBounds" Clicked="{selectDie}">
+					<Text Value="{name}"/>
+				</Panel>
+			</Each>
+		</WrapPanel>
+	</DockPanel>
+</Page>

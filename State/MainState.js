@@ -2,6 +2,8 @@ var FileSystem = require("FuseJS/FileSystem")
 var Lifecycle = require('FuseJS/Lifecycle')
 
 import * as Items from "./Items"
+import PageDiceRoller from "./PageDiceRoller"
+import * as Util from "./Util"
 
 var serializer = undefined
 // will also be called in case of `enteringBackground` (confirmed iOS/Android)
@@ -104,9 +106,14 @@ class ItemSet {
 	}
 }
 
+
 export default class MainState {
 	constructor() {
 		serializer = this
+		
+		this.mainPages = [
+			new PageDiceRoller(),
+		]
 		
 		this.title = "Dice Stat Comparator"
 		
@@ -116,8 +123,8 @@ export default class MainState {
 		this.loadData()
 		
 		//convert the dictionary of dice into an array
-		this.standardDice = objectToList( Items.standardDice )
-		this.darkSoulsDice = objectToList( Items.darkSoulsDice )
+		this.standardDice = Util.objectToList( Items.standardDice )
+		this.darkSoulsDice = Util.objectToList( Items.darkSoulsDice )
 		
 		this.itemTypes = [{
 			name: "Standard",
@@ -197,10 +204,3 @@ export default class MainState {
 	}
 }
 
-function objectToList( obj ) {
-	var list = []
-	for (var m in obj) {
-		list.push( obj[m] )
-	}
-	return list
-}
